@@ -13,12 +13,12 @@ export default {
         };
         const n = (f) => (typeof f == "number" ? f : f.floorNum());
         const queued = (e, f) => e.destinationQueue.includes(n(f));
-        const isQueued = (f) => some(elevators, (e) => queued(e, f));
+        const queuedOnAnyElevator = (f) => some(elevators, (e) => queued(e, f));
         const go = (e, f) => {
             if (!queued(e, f)) e.goToFloor(n(f));
         };
         const goIfFirst = (e, f) => {
-            if (!isQueued(n(f))) go(e, f);
+            if (!queuedOnAnyElevator(n(f))) go(e, f);
         };
         const up = (e) => (e.currentFloor() + 1) % floors.length;
         const goUp = (e) => go(e, up(e));
