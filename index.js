@@ -29,7 +29,7 @@ export default {
         const log = (e) => console.log(e);
         const allGo = (f) => elevators.map((e) => goIfFirst(e, f));
 
-        floors.map((f) => onCall(f, () => allGo(f)));
+        floors.map((f) => onCall(f, allGo));
         elevators.map((e) => e.on("floor_button_pressed", (n) => go(e, n)));
     },
     update: (dt, elevators, floors) => {}
