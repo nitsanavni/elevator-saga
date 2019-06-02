@@ -1,6 +1,9 @@
+import each from "lodash/each";
+
 type FloorNumber = number;
 
 interface Elevator {
+    idle: boolean;
     goToFloor(floorNumber: FloorNumber): void;
     on(event: "idle" | "floor_button_pressed", cb: (param?: FloorNumber) => void): void;
     currentFloor(): FloorNumber;
@@ -12,7 +15,12 @@ interface Floor {
     floorNum(): FloorNumber;
 }
 
-export default {
-    init: (elevators: Elevator[], floors: Floor[]) => {},
-    update: (dt, elevators: Elevator[], floors: Floor[]) => {}
+type Seconds = number;
+
+export = {
+    init: (elevators: Elevator[], floors: Floor[]) => {
+        elevators[1].goToFloor(4);
+        each(elevators, (e) => e.on("idle", () => (e.idle = true)));
+    },
+    update: (dt: Seconds, elevators: Elevator[], floors: Floor[]) => {}
 };
