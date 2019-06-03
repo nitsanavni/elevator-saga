@@ -15,7 +15,7 @@ from io import BytesIO
 def driver():
     driver = webdriver.Chrome(ChromeDriverManager().install())
     yield driver
-    sleep(7)
+    time.sleep(15)
     driver.close()
 
 
@@ -35,8 +35,10 @@ def test_example(driver, wait):
         .key_down(Keys.COMMAND) \
         .send_keys("a") \
         .key_up(Keys.COMMAND) \
+        .key_down(Keys.LEFT_SHIFT) \
+        .key_down(Keys.INSERT) \
         .perform()
     elem = driver.switch_to.active_element
-    elem.send_keys("hello" + str(elem.get_attribute("tagName")))
+    # elem.send_keys("llo" + str(elem.get_attribute("tagName")))
     # driver.execute_script("document.getElementById('idName').setAttribute('value', 'text_to_put');
     driver.save_screenshot("screenshot.png")
