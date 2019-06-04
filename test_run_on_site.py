@@ -44,31 +44,24 @@ def moveToAndClick(driver, element):
     actions.perform()
 
 
-def test_challenge_8(driver, wait):
-    getChallenge8(driver)
-    # ActionChains(driver) \
-    #     .key_down(Keys.COMMAND) \
-    #     .key_down(Keys.SUBTRACT) \
-    #     .key_down(Keys.SUBTRACT) \
-    #     .key_down(Keys.SUBTRACT) \
-    #     .perform()
-    # driver.execute_script("document.body.style.zoom='zoom .5'")
+@pytest.mark.parametrize("challenge", range(1, 21))
+def test_challenge(driver, wait, challenge):
+    getChallenge(driver, challenge)
     pasteCodeIntoEditor(wait, driver)
     apply(driver, wait)
     clickStart(driver)
     clickStart(driver)
-    # clickStart(driver)
     waitForChallengeToEnd(wait)
-    assertChallengeSucceeded(driver)
+    assertChallengeSucceeded(driver, challenge)
 
 
-def assertChallengeSucceeded(driver):
+def assertChallengeSucceeded(driver, challenge):
     success_selector = "body > div > div.world > div.feedbackcontainer > div > a"
     try:
         nextChallengeElement = driver.find_element_by_css_selector(
             success_selector)
     except:
-        pytest.fail("challenge #8 failed")
+        pytest.fail("challenge #" + str(challenge) + " failed")
 
 
 def waitForChallengeToEnd(wait):
@@ -91,5 +84,5 @@ def pasteCodeIntoEditor(wait, driver):
         .perform()
 
 
-def getChallenge8(driver):
-    driver.get('http://play.elevatorsaga.com/#challenge=8')
+def getChallenge(driver, challenge):
+    driver.get('http://play.elevatorsaga.com/#challenge=' + str(challenge))
