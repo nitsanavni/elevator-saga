@@ -41,6 +41,9 @@ const init = (elevators: Elevator[], floors: Floor[]) => {
     const leastBusy: () => Elevator = () => minBy(elevators, (e) => e.destinationQueue.length) as Elevator;
     const sendLeastBusyElevator = (n: FloorNumber) => go(leastBusy(), n);
 
+    // TODO - closest elevator
+    // TODO - rearrange the destination queue to be linear
+
     each(floors, (f) => onCall(f, sendLeastBusyElevator));
     each(elevators, (e) => e.on("floor_button_pressed", (n: FloorNumber) => go(e, n)));
 };

@@ -48,6 +48,7 @@ def moveToAndClick(driver, element):
 def test_challenge(driver, wait, challenge):
     getChallenge(driver, challenge)
     pasteCodeIntoEditor(wait, driver)
+    # TODO - some tests require to scroll before clicking, because the buildings are taller
     apply(driver, wait)
     clickStart(driver)
     clickStart(driver)
@@ -61,7 +62,7 @@ def assertChallengeSucceeded(driver, challenge):
         nextChallengeElement = driver.find_element_by_css_selector(
             success_selector)
     except:
-        pytest.fail("challenge #" + str(challenge) + " failed")
+        pytest.fail("challenge #%d failed" % (challenge))
 
 
 def waitForChallengeToEnd(wait):
@@ -85,4 +86,4 @@ def pasteCodeIntoEditor(wait, driver):
 
 
 def getChallenge(driver, challenge):
-    driver.get('http://play.elevatorsaga.com/#challenge=' + str(challenge))
+    driver.get('http://play.elevatorsaga.com/#challenge=%d' % (challenge))
