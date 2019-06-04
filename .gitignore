@@ -1,3 +1,7 @@
 node_modules/
 built/
 packed.js
+screenshot*.png
+.pytest_cache/
+.vscode/
+__pycache__/
