@@ -29,20 +29,35 @@ def wait(driver):
 
 
 def apply(driver, wait):
-    save_id = "button_save"
-    wait.until(EC.element_to_be_clickable((By.ID, save_id)))
-    # driver.find_element_by_id(save_id).click()
-    driver.find_element_by_id("button_apply").click()
+    moveToAndClick(driver, driver.find_element_by_id("button_save"))
+    moveToAndClick(driver, driver.find_element_by_id("button_apply"))
 
 
 def clickStart(driver):
-    driver.find_element_by_class_name("startstop").click()
+    moveToAndClick(driver, driver.find_element_by_class_name("startstop"))
+
+
+def moveToAndClick(driver, element):
+    actions = ActionChains(driver)
+    actions.move_to_element(element)
+    actions.click(element)
+    actions.perform()
 
 
 def test_challenge_8(driver, wait):
     getChallenge8(driver)
+    # ActionChains(driver) \
+    #     .key_down(Keys.COMMAND) \
+    #     .key_down(Keys.SUBTRACT) \
+    #     .key_down(Keys.SUBTRACT) \
+    #     .key_down(Keys.SUBTRACT) \
+    #     .perform()
+    # driver.execute_script("document.body.style.zoom='zoom .5'")
     pasteCodeIntoEditor(wait, driver)
+    apply(driver, wait)
     clickStart(driver)
+    clickStart(driver)
+    # clickStart(driver)
     waitForChallengeToEnd(wait)
     assertChallengeSucceeded(driver)
 
