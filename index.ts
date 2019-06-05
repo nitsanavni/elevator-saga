@@ -6,11 +6,18 @@ type FloorNumber = number;
 
 interface Elevator {
     goToFloor(floorNumber: FloorNumber): void;
-    on(event: "floor_button_pressed" | "idle", cb: ((param: FloorNumber) => void) | (() => void)): void;
+    on: ((event: "floor_button_pressed" | "stopped_at_floor", cb: (f: FloorNumber) => void) => void) &
+        ((event: "idle", cb: () => void) => void) &
+        ((event: "passing_floor", cb: (f: FloorNumber, direction: "up" | "down") => void) => void);
     currentFloor(): FloorNumber;
     goingUpIndicator: (value: boolean | void) => void | boolean;
     goingDownIndicator: (value: boolean | void) => void | boolean;
+    getPressedFloors(): FloorNumber[];
     destinationQueue: Array<FloorNumber>;
+    checkDestinationQueue(): void;
+    destinationDirection(): "up" | "down" | "stopped";
+    loadFactor(): number;
+    maxPassengerCount(): number;
 }
 
 interface Floor {
@@ -43,6 +50,10 @@ const init = (elevators: Elevator[], floors: Floor[]) => {
 
     // TODO - closest elevator
     // TODO - rearrange the destination queue to be linear
+    // TODO - use the goingUpIndicator / Down
+    // TODO - use the Elevator.loadFactor (isEmpty / isFull)
+    // TODO - use the Elevator.getPressedFloors
+    // TODO -
 
     each(floors, (f) => onCall(f, sendLeastBusyElevator));
     each(elevators, (e) => e.on("floor_button_pressed", (n: FloorNumber) => go(e, n)));
