@@ -44,7 +44,7 @@ def moveToAndClick(driver, element):
     actions.perform()
 
 
-@pytest.mark.parametrize("challenge", range(1, 21))
+@pytest.mark.parametrize("challenge", range(1, 19))
 def test_challenge(driver, wait, challenge):
     getChallenge(driver, challenge)
     pasteCodeIntoEditor(wait, driver)

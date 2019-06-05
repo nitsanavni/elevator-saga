@@ -28,6 +28,10 @@ interface Floor {
 type Seconds = number;
 
 const init = (elevators: Elevator[], floors: Floor[]) => {
+    // TODO - choose the algo based on the building setup (number of floors / elevators, elevator sizes etc.)
+    // TODO - adaptive algo per passenger stats
+    // TODO - adaptive algo per elevators speed
+    // TODO - ML? events and stats are inputs, destinationQueues / goToFloor are outputs
     const n = (f: FloorNumber | Floor): number => (typeof f == "number" ? f : f.floorNum());
     const queued = (e: Elevator, f: FloorNumber | Floor): boolean => e.destinationQueue.includes(n(f));
     const queuedOnAnyElevator = (f: FloorNumber | Floor) => some(elevators, (e) => queued(e, f));
